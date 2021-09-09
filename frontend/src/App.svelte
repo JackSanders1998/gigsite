@@ -5,38 +5,25 @@
 	import { apiData, gigDetails } from './store.js';
 
 	import auth from "./authService";
-  import { isAuthenticated, user, user_gigs, gigs } from "./store";
-  import GigItem from "./components/GigItem.svelte";
+  	import { isAuthenticated, user, user_gigs, gigs } from "./store";
+  	import GigItem from "./components/GigItem.svelte";
 
-  let auth0Client;
+  	let auth0Client;
 
-  onMount(async () => {
-    auth0Client = await auth.createClient();
+	onMount(async () => {
+		auth0Client = await auth.createClient();
+		isAuthenticated.set(await auth0Client.isAuthenticated());
+		user.set(await auth0Client.getUser());
+	});
 
-    isAuthenticated.set(await auth0Client.isAuthenticated());
-    user.set(await auth0Client.getUser());
-  });
-
-  function login() {
-    auth.loginWithPopup(auth0Client);
-  }
-
-  function logout() {
-    auth.logout(auth0Client);
-  }
-
-
-  function genRandom(length = 7) {
-    var chars =
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var result = "";
-    for (var i = length; i > 0; --i)
-      result += chars[Math.round(Math.random() * (chars.length - 1))];
-    return result;
-  }
+	function login() {
+		auth.loginWithPopup(auth0Client);
+	}
+	function logout() {
+		auth.logout(auth0Client);
+	}
 
 	const apiURL = "http://127.0.0.1:8000/api/gigs/?format=json";
-
 	onMount(async () => {
 		fetch(apiURL)
 			.then(response => response.json())
@@ -47,41 +34,44 @@
 				console.log(error);
 				return [];
 			});
-	});	
+	});
 </script>
+
+
 <main>
 	<!-- App Bar -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	  <a class="navbar-brand" href="/#">GigSite</a>
-	  <button
-		class="navbar-toggler"
-		type="button"
-		data-toggle="collapse"
-		data-target="#navbarText"
-		aria-controls="navbarText"
-		aria-expanded="false"
-		aria-label="Toggle navigation"
-	  >
-		<span class="navbar-toggler-icon" />
-	  </button>
-	  <div class="collapse navbar-collapse" id="navbarText">
-		<div class="navbar-nav mr-auto user-details">
-		  {#if $isAuthenticated}
-		  <span class="text-white">&nbsp;&nbsp;{$user.name} ({$user.email})</span>
-		  {:else}<span>&nbsp;</span>{/if}
+	<nav class="navbar">
+		<a class="navbar-brand" href="/#">
+			GigSite
+		</a>
+	  	<div class="collapse" id="navbarText">
+			<div class="navbar-nav">
+		  		{#if $isAuthenticated}
+		  		<span class="text-white">
+					  &nbsp;&nbsp;{$user.name}({$user.email})
+				</span>
+		  {:else}
+		  <span>
+			  &nbsp;
+			</span>
+			{/if}
 		</div>
 		<span class="navbar-text">
-		  <ul class="navbar-nav float-right">
-			{#if $isAuthenticated}
-			<li class="nav-item">
-			  <a class="nav-link" href="/#" on:click="{logout}">Log Out</a>
-			</li>
-			{:else}
-			<li class="nav-item">
-			  <a class="nav-link" href="/#" on:click="{login}">Log In</a>
-			</li>
-			{/if}
-		  </ul>
+		  	<div class="navbar-navt">
+				{#if $isAuthenticated}
+				<div class="nav-item">
+					<a class="nav-link" href="/#" on:click="{logout}">
+						Log Out
+					</a>
+				</div>
+				{:else}
+				<div class="nav-item">
+			  		<a class="nav-link" href="/#" on:click="{login}">
+						Log In
+					</a>
+				</div>
+				{/if}
+			</div>
 		</span>
 	  </div>
 	</nav>
@@ -94,7 +84,7 @@
 		  <div class="jumbotron">
 			<h1 class="display-4">Free Concerts Near you!</h1>
 			<a
-			  class="btn btn-primary btn-lg mr-auto ml-auto"
+			  class="btn"
 			  href="/#"
 			  role="button"
 			  on:click="{login}"
@@ -124,10 +114,6 @@
   </main>
 
 <style>
-	  #main-application {
-    margin-top: 50px;
-  }
-
 	main {
 		text-align: left;
 		padding: 1em;
