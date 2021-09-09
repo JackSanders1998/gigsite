@@ -2,22 +2,23 @@
 	export let name;
 
 	import { onMount } from "svelte";
-// http://127.0.0.1:8000/api/gigs/?format=json
-	const apiURL = "http://127.0.0.1:8000/api/gigs/1/?format=json";
 
-	let myTodo = getTodo();
+	const apiURL = "http://127.0.0.1:8000/api/gigs/2/?format=json";
 
-	async function getTodo() {
+	let myGig = getGig();
+
+	async function getGig() {
 	const response = await fetch(apiURL);
-	const todo = await response.json();
+	const gig = await response.json();
 
 	if (response.ok) {
-		return todo;
+		return gig;
 	} else {
-		throw new Error(todo);
+		throw new Error(gig);
 		}
 	}
 
+	
 </script>
 
 <main>
@@ -25,10 +26,15 @@
 	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
 
 	<div>
-		{#await myTodo}
+		{#await myGig}
 		<p>...waiting</p>
-	{:then todo_1}
-		<p>{todo_1.title}</p>
+	{:then gig_1}
+		<h3>Artist:</h3>
+		<p>{gig_1.title}</p>
+		<h3>Description:</h3>
+		<p>{gig_1.description}</p>
+		<h3>Schedule:</h3>
+		<p>{gig_1.start_datetime} <br>to<br> {gig_1.start_datetime}</p>
 	{:catch error}
 		<p style="color: red">{error.message}</p>
 	{/await}
