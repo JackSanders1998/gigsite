@@ -26,5 +26,6 @@ router.register(r'todos', views.TodoView, 'todo')
 urlpatterns = [
     path('gigs/', include('gigs.urls')),
     path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -2,20 +2,21 @@
 	export let name;
 
 	import { onMount } from "svelte";
+// http://127.0.0.1:8000/api/gigs/?format=json
+	const apiURL = "http://127.0.0.1:8000/api/gigs/1/?format=json";
 
-	const apiURL = "http://127.0.0.1:8000/api/gigs/?format=json";
-	let data = [];
-	let data_test = "testing data";
-	onMount(async function() {
-        const response = await fetch(apiURL, {
-			method: "put",
-    credentials: "same-origin",
-    body: JSON.stringify(data)
-		});
-		console.log("response", response);
-        data = await response.json();
-		console.log('data', data);
-    });
+	let myTodo = getTodo();
+
+	async function getTodo() {
+	const response = await fetch(apiURL);
+	const todo = await response.json();
+
+	if (response.ok) {
+		return todo;
+	} else {
+		throw new Error(todo);
+		}
+	}
 
 </script>
 
@@ -24,13 +25,13 @@
 	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
 
 	<div>
-		{data_test}
-		{#each data_test as item }
-			<div>
-				<p> "test" </p>
-				<p> {item.title} </p>
-			</div>
-		{/each}
+		{#await myTodo}
+		<p>...waiting</p>
+	{:then todo_1}
+		<p>{todo_1.title}</p>
+	{:catch error}
+		<p style="color: red">{error.message}</p>
+	{/await}
 	</div>
 
 </main>
