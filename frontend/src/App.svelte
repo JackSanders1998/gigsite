@@ -7,6 +7,7 @@
 	import auth from "./authService";
   	import { isAuthenticated, user, user_gigs, gigs } from "./store";
   	import GigItem from "./components/GigItem.svelte";
+	import crud from "./components/crud.svelte";
 
   	let auth0Client;
 
@@ -38,28 +39,6 @@
 			});
 	});
 
-	let gig = gigDetails;
-	let artist = '';
-	let title = '';
-	let description = '';
-	let start_datetime = '';
-	let i = 0;
-
-	$: filteredGig = artist
-		? gig.filter(gig => {
-			const gig_info = `${gig.title}, ${gig.start_datetime}`;
-			return gig_info.toLowerCase().startsWith(artist.toLowerCase());
-		})
-		: gig;
-
-	$: selected = filteredGig[i];
-	$: reset_inputs(selected);
-
-	function reset_inputs(gig) {
-		title = gig ? gig.title : '';
-		start_datetime = gig ? (gig.start_datetime) : '';
-	}
-	console.log(gig)
 </script>
 
 
@@ -122,8 +101,6 @@
 	{:else}
 	<div>
 		<h1>Gigs</h1>
-		{dataEval[0]}
-		{gigDetails[0]}
 		{#if dataEval}
 			{#each $gigDetails as gig}
 				<div class="gig">
@@ -140,23 +117,9 @@
 		{:else}
 			<p class="loading">loading...</p>
 		{/if}
-		<input placeholder="filter gig" bind:value={artist}>
-
-		<select bind:value={i} size={5}>
-			{#each $filteredGig as gig, i}
-				<option value={i}>{gig.title} | {(gig.start_datetime).substring(5,10)}</option>
-			{/each}
-		</select>
-		
-		<p>
-			{title}
-			performing on <br>
-			{start_datetime.substring(0,10)} at <br>
-			{start_datetime.substring(11,19)}
-		</p>
 	</div>
 	{/if}
-  </main>
+</main>
 
 <style>
 	main {
@@ -187,26 +150,5 @@
 		main {
 			max-width: none;
 		}
-	}
-
-
-	* {
-		font-family: inherit;
-		font-size: inherit;
-	}
-
-	input {
-		display: block;
-		margin: 0 0 0.5em 0;
-	}
-
-	select {
-		float: left;
-		margin: 0 1em 1em 0;
-		width: 14em;
-	}
-
-	.buttons {
-		clear: both;
 	}
 </style>
