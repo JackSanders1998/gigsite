@@ -1,5 +1,5 @@
 <script>
-	export let name;
+	// export let name;
 
 	import { onMount } from "svelte";
 	import { apiData, gigDetails } from '../store.js';
@@ -50,7 +50,9 @@
 			<div class="navbar-nav">
 		  		{#if $isAuthenticated}
 		  		<span class="text-white">
-					  &nbsp;&nbsp;{$user.name}({$user.email})
+					  &nbsp;&nbsp;{$user.// @ts-ignore
+					  name}({$user.// @ts-ignore
+					  email})
 				</span>
 		  {:else}
 		  <span>
@@ -137,10 +139,6 @@
 	.gig {
 		background-color: lightgrey;
 		border-radius: 8px;
-	}
-
-	.gig_text {
-		
 	}
 
 
