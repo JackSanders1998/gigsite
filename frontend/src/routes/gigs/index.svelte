@@ -1,11 +1,13 @@
-<!-- <script>
+<script lang="ts">
 	// export let name;
 
 	import { onMount } from "svelte";
-	import { apiData, gigDetails } from '../store.js';
+	import { apiData, gigDetails } from '../../store.js';
+	import { enhance } from '$lib/form';
+	import type { Load } from '@sveltejs/kit';
 
-	import auth from "../authService";
-  	import { isAuthenticated, user, user_gigs, gigs } from "../store";
+	import auth from "../../authService";
+  	import { isAuthenticated, user, user_gigs, gigs } from "../../store";
 
   	let auth0Client;
 
@@ -37,11 +39,11 @@
 			});
 	});
 
-</script> -->
+</script>
 
 
-<!-- <main>
-	<nav class="navbar">
+<main>
+	<!-- <nav class="navbar">
 		<a class="navbar-brand" href="/#">
 			GigSite
 		</a>
@@ -77,9 +79,9 @@
 			</div>
 		</span>
 	  </div>
-	</nav>
+	</nav> -->
   
-	{#if !$isAuthenticated}
+	<!-- {#if !$isAuthenticated}
 	<div class="container mt-5">
 	  <div class="row">
 		<div class="col-md-10 offset-md-1">
@@ -96,9 +98,9 @@
 		</div>
 	  </div>
 	</div>
-	{:else}
+	{:else} -->
 	<div>
-		<h1>Gigs</h1>
+		<h1>This page displays Gigs</h1>
 		{#if dataEval}
 			{#each $gigDetails as gig}
 				<div class="gig">
@@ -116,10 +118,14 @@
 			<p class="loading">loading...</p>
 		{/if}
 	</div>
-	{/if}
-</main> -->
+	<!-- {/if} -->
+</main>
 
-<!-- <style>
+<svelte:head>
+	<title>Todos</title>
+</svelte:head>
+
+<style>
 	main {
 		text-align: left;
 		padding: 1em;
@@ -144,50 +150,5 @@
 		main {
 			max-width: none;
 		}
-	}
-</style> -->
-
-<script context="module" lang="ts">
-	export const prerender = true;
-</script>
-
-<script lang="ts">
-	import GigList from '$lib/GigList.svelte';
-</script>
-
-<svelte:head>
-	<title>Home</title>
-</svelte:head>
-
-<section>
-	<GigList />
-</section>
-
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 1;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
 	}
 </style>
