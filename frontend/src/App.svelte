@@ -24,17 +24,58 @@
 	}
 
 	const apiURL = "http://127.0.0.1:8000/api/gigs/?format=json";
+	let dataEval;
 	onMount(async () => {
 		fetch(apiURL)
 			.then(response => response.json())
 			.then(data => {
 				console.log("data", data)
+				dataEval = data;
 				apiData.set(data);
+				console.log(apiData.get());
 			}).catch(error => {
 				console.log(error);
 				return [];
 			});
+		console.log(JSON.stringify(apiData));
 	});
+
+	console.log(apiData.valueOf());
+	console.log(apiData);
+
+	let people = [
+		{ first: 'Kanye', last: 'West' },
+		{ first: 'Aubrey', last: 'Graham' },
+		{ first: 'Bon', last: 'Iver' }
+	];
+
+	let prefix = '';
+	let first = '';
+	let last = '';
+	let i = 0;
+
+	$: filteredPeople = prefix
+		? people.filter(person => {
+			const name = `${person.last}, ${person.first}`;
+			return name.toLowerCase().startsWith(prefix.toLowerCase());
+		})
+		: people;
+
+	$: selected = filteredPeople[i];
+
+	$: reset_inputs(selected);
+
+	function create() {
+		people = people.concat({ first, last });
+		i = people.length - 1;
+		first = last = '';
+	}
+
+	function reset_inputs(person) {
+		first = person ? person.first : '';
+		last = person ? person.last : '';
+	}
+	
 </script>
 
 
@@ -97,18 +138,32 @@
 	{:else}
 	<div>
 		<h1>Gigs</h1>
-		{#each $gigDetails as gig}
-			<div class="gig">
-				<div class="gig_text">
-					<h3>Artist:</h3>
-					<p>{gig.title}</p>
-					<h3>Description:</h3>
-					<p>{gig.description}</p>
-					<h3>Schedule:</h3>
-					<p>{gig.start_datetime} <br>to<br> {gig.start_datetime}</p>
+		{dataEval[0]}
+		{gigDetails[0]}
+		{#if dataEval}
+			{#each $gigDetails as gig}
+				<div class="gig">
+					<div class="gig_text">
+						<h3>Artist:</h3>
+						<p>{gig.title}</p>
+						<h3>Description:</h3>
+						<p>{gig.description}</p>
+						<h3>Schedule:</h3>
+						<p>{gig.start_datetime} <br>to<br> {gig.start_datetime}</p>
+					</div>
 				</div>
-			</div>
-		{/each}
+			{/each}
+		{:else}
+			<p class="loading">loading...</p>
+		{/if}
+
+		<input placeholder="search gigs" bind:value={prefix}>
+		<select bind:value={i} size={5}>
+			{#each $gigDetails as gig, i}
+				<option value={i}>{gig.title}</option>
+			{/each}
+		</select>
+		<p>{first}</p>
 	</div>
 	{/if}
   </main>
@@ -142,5 +197,26 @@
 		main {
 			max-width: none;
 		}
+	}
+
+
+	* {
+		font-family: inherit;
+		font-size: inherit;
+	}
+
+	input {
+		display: block;
+		margin: 0 0 0.5em 0;
+	}
+
+	select {
+		float: left;
+		margin: 0 1em 1em 0;
+		width: 14em;
+	}
+
+	.buttons {
+		clear: both;
 	}
 </style>
