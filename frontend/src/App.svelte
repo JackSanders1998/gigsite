@@ -32,50 +32,34 @@
 				console.log("data", data)
 				dataEval = data;
 				apiData.set(data);
-				console.log(apiData.get());
 			}).catch(error => {
 				console.log(error);
 				return [];
 			});
-		console.log(JSON.stringify(apiData));
 	});
 
-	console.log(apiData.valueOf());
-	console.log(apiData);
-
-	let people = [
-		{ first: 'Kanye', last: 'West' },
-		{ first: 'Aubrey', last: 'Graham' },
-		{ first: 'Bon', last: 'Iver' }
-	];
-
-	let prefix = '';
-	let first = '';
-	let last = '';
+	let gig = gigDetails;
+	let artist = '';
+	let title = '';
+	let description = '';
+	let start_datetime = '';
 	let i = 0;
 
-	$: filteredPeople = prefix
-		? people.filter(person => {
-			const name = `${person.last}, ${person.first}`;
-			return name.toLowerCase().startsWith(prefix.toLowerCase());
+	$: filteredGig = artist
+		? gig.filter(gig => {
+			const gig_info = `${gig.title}, ${gig.start_datetime}`;
+			return gig_info.toLowerCase().startsWith(artist.toLowerCase());
 		})
-		: people;
+		: gig;
 
-	$: selected = filteredPeople[i];
-
+	$: selected = filteredGig[i];
 	$: reset_inputs(selected);
 
-	function create() {
-		people = people.concat({ first, last });
-		i = people.length - 1;
-		first = last = '';
+	function reset_inputs(gig) {
+		title = gig ? gig.title : '';
+		start_datetime = gig ? (gig.start_datetime) : '';
 	}
-
-	function reset_inputs(person) {
-		first = person ? person.first : '';
-		last = person ? person.last : '';
-	}
-	
+	console.log(gig)
 </script>
 
 
@@ -156,14 +140,20 @@
 		{:else}
 			<p class="loading">loading...</p>
 		{/if}
+		<input placeholder="filter gig" bind:value={artist}>
 
-		<input placeholder="search gigs" bind:value={prefix}>
 		<select bind:value={i} size={5}>
-			{#each $gigDetails as gig, i}
-				<option value={i}>{gig.title}</option>
+			{#each $filteredGig as gig, i}
+				<option value={i}>{gig.title} | {(gig.start_datetime).substring(5,10)}</option>
 			{/each}
 		</select>
-		<p>{first}</p>
+		
+		<p>
+			{title}
+			performing on <br>
+			{start_datetime.substring(0,10)} at <br>
+			{start_datetime.substring(11,19)}
+		</p>
 	</div>
 	{/if}
   </main>
