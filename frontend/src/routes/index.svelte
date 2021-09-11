@@ -152,7 +152,7 @@
 </script>
 
 <script lang="ts">
-	import GigList from '$lib/GigList.svelte';
+	import Home from '$lib/Home.svelte';
 </script>
 
 <svelte:head>
@@ -160,7 +160,7 @@
 </svelte:head>
 
 <section>
-	<GigList />
+	<Home />
 </section>
 
 <style>
