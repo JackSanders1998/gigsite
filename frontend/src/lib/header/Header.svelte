@@ -1,6 +1,31 @@
 <script lang="ts">
+
 	import { page } from '$app/stores';
 	import logo from './svelte-logo.svg';
+
+	import { onMount } from "svelte";
+	import auth from "../../authService";
+	import { isAuthenticated, user} from "../../store";
+
+
+	let auth0Client;
+
+	onMount(async () => {
+		auth0Client = await auth.createClient();
+		isAuthenticated.set(await auth0Client.isAuthenticated());
+		user.set(await auth0Client.getUser());
+	});
+
+	function login() {
+		auth.loginWithPopup(auth0Client);
+	}
+	function logout() {
+		auth.logout(auth0Client);
+	}
+ 
+
+
+	
 </script>
 
 <header>
@@ -18,6 +43,17 @@
 			<li class:active={$page.path === '/'}><a sveltekit:prefetch href="/">Home</a></li>
 			<li class:active={$page.path === '/about'}><a sveltekit:prefetch href="/about">About</a></li>
 			<li class:active={$page.path === '/gigs'}><a sveltekit:prefetch href="/gigs">Gigs</a></li>
+			<li> 				
+				{#if $isAuthenticated}
+				<a sveltekit:prefetch href="/" on:click="{logout}">
+					Log Out &nbsp;&nbsp;{$user.name}({$user.email})
+				</a>
+				{:else}
+				<a sveltekit:prefetch href="/" on:click="{login}">
+					Log In
+				</a>
+				{/if}
+			</li>
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
@@ -25,7 +61,7 @@
 	</nav>
 
 	<div class="corner">
-		<!-- TODO put something else here? github link? -->
+		<!-- login/signup -->
 	</div>
 </header>
 
