@@ -1,25 +1,6 @@
 <script>
 	// export let name;
-
-	import { onMount } from "svelte";
-	import { apiData, gigDetails } from '../store.js';
-
   	import { isAuthenticated } from "../store";
-
-	const apiURL = "http://127.0.0.1:8000/api/gigs/?format=json";
-	let dataEval;
-	onMount(async () => {
-		fetch(apiURL)
-			.then(response => response.json())
-			.then(data => {
-				console.log("data", data)
-				dataEval = data;
-				apiData.set(data);
-			}).catch(error => {
-				console.log(error);
-				return [];
-			});
-	});
 
 </script>
 
@@ -31,7 +12,7 @@
 	{:else}
 	<div>
 		<h1>THIS IS THE HOMEPAGE</h1>
-		<p>logged in</p>
+		<p>(logged in)</p>
 	</div>
 	{/if}
 </main>

@@ -1,7 +1,7 @@
 <script lang="ts">
 
 	import { page } from '$app/stores';
-	import logo from './svelte-logo.svg';
+	import logo from './logo.svg';
 
 	import { onMount } from "svelte";
 	import auth from "../../authService";
