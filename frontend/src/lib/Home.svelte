@@ -1,7 +1,5 @@
 <script>
-	// export let name;
   	import { isAuthenticated } from "../store";
-
 </script>
 
 
@@ -25,18 +23,13 @@
 		margin: 0 auto;
 	}
 
+
 	h1 {
 		color: #ff3e00;
 		text-transform: uppercase;
 		font-size: 4em;
 		font-weight: 100;
 	}
-
-	.gig {
-		background-color: lightgrey;
-		border-radius: 8px;
-	}
-
 
 	@media (min-width: 640px) {
 		main {
