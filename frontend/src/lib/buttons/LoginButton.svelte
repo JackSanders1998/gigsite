@@ -1,4 +1,5 @@
 <script>
+	export let button_text;
 	function handleClick() {
 		alert('LoginButton')
 	}

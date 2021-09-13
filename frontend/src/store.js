@@ -13,6 +13,17 @@ export const gigDetails = derived(apiData, ($apiData) => {
     return [];
   });
 
+// Handle User Data
+export const userData = writable();
+
+export const userDetails = derived(userData, ($userData) => {
+    if ($userData){
+        console.log("in userData");
+        return $userData.map(user => user);
+    }
+    console.log("not in userData");
+    return [];
+  });
 
 export const isAuthenticated = writable(false);
 export const user = writable({});

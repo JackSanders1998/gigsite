@@ -44,6 +44,7 @@
 			<li class:active={$page.path === '/about'}><a sveltekit:prefetch href="/about">About</a></li>
 			<li class:active={$page.path === '/gigs'}><a sveltekit:prefetch href="/gigs">Gigs</a></li>
 			<li class:active={$page.path === '/styleguide'}><a sveltekit:prefetch href="/styleguide">Style Guide</a></li>
+			<li class:active={$page.path === '/profile'}><a sveltekit:prefetch href="/profile">Profile</a></li>
 			<li> 				
 				{#if $isAuthenticated}
 				<a sveltekit:prefetch href="/" on:click="{logout}">

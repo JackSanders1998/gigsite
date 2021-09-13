@@ -1,17 +1,16 @@
-<script lang="ts">
-
+<script>
 	import Form from "$lib/forms/Form.svelte"
 	
 	function handleOnSubmit() {
 		console.log("I'm the handleOnSubmit() in App.svelte")
 	}
+
 	import { onMount } from "svelte";
-	import { apiData, gigDetails } from '../../store.js';
-	import GigList from '$lib/gig/GigList.svelte';
+	import { userData, userDetails } from '../store.js';
 
-  	import { isAuthenticated} from "../../store";
+  	import { isAuthenticated, user} from "../store";
 
-	const apiURL = "http://127.0.0.1:8000/api/gigs/?format=json";
+	const apiURL = "http://127.0.0.1:8000/api/users/?format=json";
 	let dataEval;
 	onMount(async () => {
 		fetch(apiURL)
@@ -19,29 +18,31 @@
 			.then(data => {
 				console.log("data", data)
 				dataEval = data;
-				apiData.set(data);
+				userData.set(data);
 			}).catch(error => {
 				console.log(error);
 				return [];
 			});
-	});
+		});
+
 </script>
 
 
 <main>
-	<h1>This page displays Gigs</h1>
-		{#if !$isAuthenticated}
-			Must be logged in to see gigs.
-		{:else}
-			All data loaded from django REST API!
-			<Form on:submit={handleOnSubmit}>
-			</Form>
-		{/if}
+	{#if !$isAuthenticated}
+		<p>(not logged in)</p>
+	{:else}
+	<div>
+		welcome {$user.name}<br>
+		url: {$user.url}<br>
+		username: {$user.username}<br>
+		email: {$user.email}<br>
+		groups: {$user.groups}<br>
+		<Form on:submit={handleOnSubmit}>
+		</Form>
+	</div>
+	{/if}
 </main>
-
-<svelte:head>
-	<title>GigSite</title>
-</svelte:head>
 
 <style>
 	main {
@@ -50,6 +51,7 @@
 		max-width: 240px;
 		margin: 0 auto;
 	}
+
 
 	h1 {
 		color: #ff3e00;

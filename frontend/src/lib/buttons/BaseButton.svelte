@@ -1,9 +1,11 @@
 <script>
+	export let button_text;
+
 	function handleClick() {
 		alert('SampleButtonA')
 	}
 </script>
 
 <button on:click={handleClick}>
-	SampleButtonA
+	button_text
 </button>
