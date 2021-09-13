@@ -1,10 +1,10 @@
 <script lang="ts">
-	let gigs;
+	import { apiData, gigDetails } from '../../store.js';
 	import Gig from './Gig.svelte';
 </script>
 
 <main>
-	{#each $gigs as gig}
+	{#each $gigDetails as gig}
 		<div class="gig">
 			<Gig gigItem={gig} />
 		</div>
@@ -12,18 +12,10 @@
 </main>
 
 <style>
-	main {
-		text-align: left;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
 	.gig {
 		background-color: lightgrey;
 		border-radius: 8px;
 	}
-
 
 	@media (min-width: 640px) {
 		main {

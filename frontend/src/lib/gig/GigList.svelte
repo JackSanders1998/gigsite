@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { apiData } from '../../store.js';
+	import { apiData, gigDetails } from '../../store.js';
 	import Gigs from './Gigs.svelte';
 
 	const apiURL = "http://127.0.0.1:8000/api/gigs/?format=json";
@@ -23,7 +23,7 @@
 
 <main>
 	{#if dataEval}
-		<Gigs gigs={GigDetails}/>
+		<Gigs />
     {:else}
         <p class="loading">loading...</p>
     {/if}

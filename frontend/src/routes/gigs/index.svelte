@@ -1,8 +1,7 @@
 <script lang="ts">
-	// export let name;
-
 	import { onMount } from "svelte";
 	import { apiData, gigDetails } from '../../store.js';
+	import GigList from '../../lib/gig/GigList.svelte';
 
   	import { isAuthenticated} from "../../store";
 
@@ -20,7 +19,6 @@
 				return [];
 			});
 	});
-
 </script>
 
 
@@ -29,27 +27,12 @@
 		{#if !$isAuthenticated}
 			Must be logged in to see gigs.
 		{:else}
-			{#if dataEval}
-				{#each $gigDetails as gig}
-					<div class="gig">
-						<div class="gig_text">
-							<h3>Artist:</h3>
-							<p>{gig.title}</p>
-							<h3>Description:</h3>
-							<p>{gig.description}</p>
-							<h3>Schedule:</h3>
-							<p>{gig.start_datetime} <br>to<br> {gig.start_datetime}</p>
-						</div>
-					</div>
-				{/each}
-			{:else}
-				<p class="loading">loading...</p>
-			{/if}
+			<GigList />
 		{/if}
 </main>
 
 <svelte:head>
-	<title>Todos</title>
+	<title>GigSite</title>
 </svelte:head>
 
 <style>
@@ -66,12 +49,6 @@
 		font-size: 4em;
 		font-weight: 100;
 	}
-
-	.gig {
-		background-color: lightgrey;
-		border-radius: 8px;
-	}
-
 
 	@media (min-width: 640px) {
 		main {
