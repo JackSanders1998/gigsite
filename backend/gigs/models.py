@@ -13,31 +13,18 @@ class Gig(models.Model):
     
     def __str__(self):
         return self.title
-
-
-class Todo(models.Model):
-    title = models.CharField(max_length=120)
-    description = models.TextField()
-    completed = models.BooleanField(default=False)
-
-    def _str_(self):
-        return self.title
-
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+class User(models.Model):
+    url = models.CharField(max_length=120)
+    username = models.CharField(max_length=120)
+    email = models.CharField(max_length=120)
+    groups = models.CharField(max_length=120)
 
     def __str__(self):
-        return self.question_text
-    
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        return self.username
 
-
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+class Group(models.Model):
+    url = models.CharField(max_length=120)
+    name = models.CharField(max_length=120)
 
     def __str__(self):
-        return self.choice_text
+        return self.name

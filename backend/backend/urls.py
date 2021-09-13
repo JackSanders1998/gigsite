@@ -21,11 +21,11 @@ from gigs import views
 
 router = routers.DefaultRouter()
 router.register(r'gigs', views.GigView, 'gig')
-router.register(r'todos', views.TodoView, 'todo')
+router.register(r'users', views.UserView, 'user')
 
 urlpatterns = [
-    path('gigs/', include('gigs.urls')),
     path('api/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
+    path('gigs/', include('gigs.urls')),
+    # path('users/', include('users.urls'))
 ]

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import GigSerializer, TodoSerializer
-from .models import Gig, Todo
+from .serializers import GigSerializer, UserSerializer
+from .models import Gig, User
 
 # Create your views here.
 from django.http import HttpResponse
@@ -14,6 +14,6 @@ class GigView(viewsets.ModelViewSet):
     serializer_class = GigSerializer
     queryset = Gig.objects.all()
 
-class TodoView(viewsets.ModelViewSet):
-    serializer_class = TodoSerializer
-    queryset = Todo.objects.all()
+class UserView(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()

@@ -1,13 +1,14 @@
 from django.contrib import admin
-from .models import Todo, Question, Gig
+from .models import Gig, User, Group
 
-
-class TodoAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'completed')
 
 class GigAdmin(admin.ModelAdmin):
     list_display = ('title', 'description', 'start_datetime', 'end_datetime')
 
-# Register your models here.
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('title', 'description', 'completed')
+
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ('url', 'username', 'email', 'completed')
 
 admin.site.register(Gig, GigAdmin)

@@ -26,7 +26,7 @@
 	</p>
 
 	<p>
-		The <a href="/todos">Gigs</a> page illustrates is where u find free gigs.
+		The <a href="/gigs">Gigs</a> page illustrates where u find free gigs.
 	</p>
 </div>
 
