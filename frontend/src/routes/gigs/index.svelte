@@ -27,6 +27,7 @@
 		{#if !$isAuthenticated}
 			Must be logged in to see gigs.
 		{:else}
+			All data loaded from django REST API!
 			<GigList />
 		{/if}
 </main>
