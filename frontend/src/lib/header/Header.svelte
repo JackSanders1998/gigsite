@@ -43,6 +43,7 @@
 			<li class:active={$page.path === '/'}><a sveltekit:prefetch href="/">Home</a></li>
 			<li class:active={$page.path === '/about'}><a sveltekit:prefetch href="/about">About</a></li>
 			<li class:active={$page.path === '/gigs'}><a sveltekit:prefetch href="/gigs">Gigs</a></li>
+			<li class:active={$page.path === '/styleguide'}><a sveltekit:prefetch href="/styleguide">Style Guide</a></li>
 			<li> 				
 				{#if $isAuthenticated}
 				<a sveltekit:prefetch href="/" on:click="{logout}">
@@ -61,7 +62,6 @@
 	</nav>
 
 	<div class="corner">
-		<!-- login/signup -->
 	</div>
 </header>
 
