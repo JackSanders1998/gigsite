@@ -34,8 +34,9 @@
 			Must be logged in to see gigs.
 		{:else}
 			All data loaded from django REST API!
-			<Form on:submit={handleOnSubmit}>
-			</Form>
+			<!-- <Form on:submit={handleOnSubmit}>
+			</Form> -->
+			<GigList />
 		{/if}
 </main>
 
